@@ -2,6 +2,7 @@ from tkinter import filedialog
 from PIL import Image, ImageOps, ImageTk
 
 file_path = ""
+image = Image
 MAX_WIDTH = 900
 MAX_HEIGHT = 600
 
@@ -9,10 +10,12 @@ def add_image(image_container):
     global file_path
     file_path = filedialog.askopenfilename()
 
+    global image
     image = Image.open(file_path)
     update_image(image, image_container)
 
 def select_filter(filter, image_container):
+    global image
     image = Image.open(file_path)
 
     if filter == "Black and White":
@@ -21,6 +24,7 @@ def select_filter(filter, image_container):
     update_image(image, image_container)
 
 def clear_filters(image_container):
+    global image
     image = Image.open(file_path)
     update_image(image, image_container)
 
@@ -47,3 +51,8 @@ def resize_image(image):
 
     image = image.resize((int(width), int(height)), Image.ANTIALIAS)
     return image
+
+def save_image():
+    file_name = filedialog.asksaveasfile(defaultextension=".jpg", filetypes=[('Image', '*.jpg')])
+    if file_name:
+        image.save(file_name)
