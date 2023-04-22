@@ -1,6 +1,8 @@
 from tkinter import filedialog
 from PIL import Image, ImageOps, ImageTk
 
+import image_filters
+
 file_path = ""
 image = Image
 MAX_WIDTH = 900
@@ -17,10 +19,8 @@ def add_image(image_container):
 def select_filter(filter, image_container):
     global image
     image = Image.open(file_path)
-
-    if filter == "Black and White":
-        image = ImageOps.grayscale(image)
-
+    image = image_filters.filter_image(filter, image)
+    
     update_image(image, image_container)
 
 def clear_filters(image_container):
